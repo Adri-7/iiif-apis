@@ -30,13 +30,21 @@ import static com.google.common.collect.Lists.asList;
 @JsonPropertyOrder({"@context", "@id", "@type", "label", "description", "metadata", "thumbnail", "service"})
 public abstract class Resource<T> implements Choice<T> {
 
+  /**
+  * Default IIIF context
+  */
   public static final String CONTEXT = "http://iiif.io/api/presentation/2/context.json";
+
+  /**
+   * List of used contexts
+   */
+  private static List<String> contexts = new ArrayList<>();
 
   /** Only used during serialization,
    *  @see SerializerModifier **/
   @SuppressWarnings("checkstyle:membername")
   @JsonProperty("@context")
-  public String _context;
+  public List<String> _context;
 
   @JsonProperty("@id")
   private URI identifier;
@@ -94,6 +102,24 @@ public abstract class Resource<T> implements Choice<T> {
     } else {
       this.identifier = null;
     }
+  }
+  
+  /**
+   * Add a context to the contexts displayed in the top parent
+   * 
+   * @param context context to add
+   */
+  public static void addContext(String context) {
+    contexts.add(context);
+  }
+  
+  /**
+   * Get contexts list
+   * 
+   * @return contexts list
+   */
+  public static List<String> getContexts() {
+    return contexts;
   }
 
   @JsonProperty("@type")

@@ -95,7 +95,7 @@ public class JsonMappingTest {
 
     String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(canvas);
     DocumentContext ctx = JsonPath.parse(json);
-    JsonPathAssert.assertThat(ctx).jsonPathAsString("['@context']").isEqualTo("http://iiif.io/api/presentation/2/context.json");
+    JsonPathAssert.assertThat(ctx).jsonPathAsString("['@context'][0]").isEqualTo("http://iiif.io/api/presentation/2/context.json");
     JsonPathAssert.assertThat(ctx).jsonPathAsString("['@id']").isEqualTo("http://some.uri");
     JsonPathAssert.assertThat(ctx).jsonPathAsString("['@type']").isEqualTo("sc:Canvas");
     JsonPathAssert.assertThat(ctx).jsonPathAsString("label").isEqualTo("A label");

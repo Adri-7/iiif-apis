@@ -14,6 +14,7 @@ import de.digitalcollections.iiif.model.sharedcanvas.Canvas;
 import de.digitalcollections.iiif.model.sharedcanvas.Resource;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,7 +30,11 @@ public class ResourceSerializer extends JsonSerializer<Resource> {
   public void serialize(Resource value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
     // Add @context to top-level object
     if (gen.getOutputContext().getParent() == null) {
-      value._context = Resource.CONTEXT;
+      if (Resource.getContexts().isEmpty()) {
+        value._context = Collections.singletonList(Resource.CONTEXT);
+      } else {
+        value._context = Resource.getContexts();
+      }
     }
 
     if (value.getAlternatives() != null && !value.getAlternatives().isEmpty()) {
